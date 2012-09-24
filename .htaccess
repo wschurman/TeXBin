@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^(\d+)[/]?$ index.php?view_id=$1
+
+RedirectMatch 404 /\\.git.*(/|$)
+

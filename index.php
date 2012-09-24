@@ -66,6 +66,8 @@ if (isset($_POST['text'])) {
   } else {
     $arr = read_latex($_GET['view_id']);
     $result = $arr["result"];
+    $result["title"] = str_replace("<", "&lt;", $result["title"]);
+    $result["title"] = str_replace(">", "&gt;", $result["title"]);
     $alert_type = $arr["alert_type"];
   }
 }
