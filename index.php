@@ -76,6 +76,7 @@ if (isset($_POST['text'])) {
     $result["title"] = str_replace(">", "&gt;", $result["title"]);
     $result["text"] = str_replace("<", "&lt;", $result["text"]);
     $result["text"] = str_replace(">", "&gt;", $result["text"]);
+    $result["text"] = str_replace("\n", "<br />", $result["text"]);
     $alert_type = $arr["alert_type"];
   }
 }
