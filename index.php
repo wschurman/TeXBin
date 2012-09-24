@@ -33,6 +33,12 @@ function read_latex($id) {
   $db = new Database();
   try {
     $arr = $db->get_latex($_GET['view_id']);
+    if ($arr["text"] == "") {
+      return array(
+        "result" => "The specified ID does not exist.",
+        "alert_type" => "alert-error"
+      );
+    }
     return array(
       "result" => $arr,
       "alert_type" => "alert-success"
