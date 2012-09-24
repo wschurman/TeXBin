@@ -39,3 +39,9 @@ div#buttons {
   color: #666;
   font-size: 12px;
 }
+#link {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 8px;
+  width: 300px;
+}
