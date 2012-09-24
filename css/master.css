@@ -1,0 +1,41 @@
+body {
+  margin: 30px 10% auto 10%;
+  background-image: url('bg.png');
+}
+h1 {
+  font-family: 'Alfa Slab One';
+  font-size: 48px;
+  letter-spacing: 2px;
+  text-align: center;
+  padding-bottom: 15px;
+}
+textarea {
+  resize: none;
+  font-family: 'Cutive';
+}
+div#social {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+div#github {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+}
+div#latex {
+
+}
+div#buttons {
+  float: right;
+  margin-right: .5%;
+}
+.latex-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.latex-date {
+  font-style: italic;
+  color: #666;
+  font-size: 12px;
+}
