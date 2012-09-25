@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 require("db.php");
 
 $result = NULL;
@@ -52,18 +55,24 @@ function read_latex($id) {
 }
 
 if (isset($_POST['text'])) {
-  if (!isset($_POST['title']) || strlen($_POST['title']) == 0) {
-    $result = "Please provide a title for your post.";
-    $alert_type = "alert-error";
-  } else if (strlen($_POST['title']) == 0) {
-    $result = "No body text provided.";
-    $alert_type = "alert-error";
+  if (isset($_POST['form_token']) && $_POST['form_token'] == $_SESSION['form_token']) {
+    if (!isset($_POST['title']) || strlen($_POST['title']) == 0) {
+      $result = "Please provide a title for your post.";
+      $alert_type = "alert-error";
+    } else if (strlen($_POST['title']) == 0) {
+      $result = "No body text provided.";
+      $alert_type = "alert-error";
+    } else {
+      # Format date like 'August 8th 2005 03:12:46 PM'.
+      date_default_timezone_set('America/New_York');
+      $arr = insert_latex($_POST['title'], date('F jS Y h:i:s A'), $_POST['text']);
+      $result = $arr["result"];
+      $alert_type = $arr["alert_type"];
+    }
+    unset($_SESSION['form_token']);
   } else {
-    # Format date like 'August 8th 2005 03:12:46 PM'.
-    date_default_timezone_set('America/New_York');
-    $arr = insert_latex($_POST['title'], date('F jS Y h:i:s A'), $_POST['text']);
-    $result = $arr["result"];
-    $alert_type = $arr["alert_type"];
+    $result = "You try to hack meee.!";
+    $alert_type = "alert-error";
   }
 } else if (isset($_GET['view_id'])) {
   if (!is_numeric($_GET['view_id']) || $_GET['view_id'] < 1) {
@@ -80,6 +89,10 @@ if (isset($_POST['text'])) {
     $alert_type = $arr["alert_type"];
   }
 }
+
+$form_token = uniqid();
+$_SESSION['form_token'] = $form_token;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -164,6 +177,7 @@ if (isset($_POST['text'])) {
     <script>selectText("link");</script>
     <?php } ?>
     <form action="." method="post" id="posting">
+      <input type="hidden" name="form_token" value="<?php echo $_SESSION['form_token'] ?>" />
       Title: <input type="text" name="title" /><br />
       <textarea name="text" id="text" style="width: 98%" rows="20"></textarea><br />
       <div id="buttons">
